@@ -1,17 +1,19 @@
 import React, { useRef, useState, useEffect, useContext } from "react";
-import { FormEvent } from "react";
-import api from "../api/api";
-import Layout from "../components/Layout";
-import { RiShieldUserLine } from "react-icons/ri";
 import AppContext from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
+import { FormEvent } from "react";
 
-interface IUser {
-    userName: string,
-    userId: string,
-    userPhoto: string,
-    token: string
-}
+//axios config 
+import api from "../api/api";
+
+//components
+import Layout from "../components/Layout";
+
+//icons
+import { RiShieldUserLine } from "react-icons/ri";
+
+//interfaces
+import IUser from "../Interfaces/IUser";
 
 const Login = () => {
     const { user, setUser } = useContext(AppContext);
@@ -33,7 +35,7 @@ const Login = () => {
             const loginRes = await api.post("/signin", body);
 
             const loginData: IUser = await loginRes.data;
-            setUser(loginData);
+            setUser ? setUser(loginData) : null;
             return navigate("/home");
         }
     }

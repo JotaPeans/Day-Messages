@@ -9,6 +9,9 @@ import AppContext from "./assets/context/AppContext";
 import Login from "./assets/routes/Login";
 import Home from "./assets/routes/Home";
 
+//interfaces
+import IUser from "./assets/Interfaces/IUser";
+
 interface IPrivateRoute {
     privateElement: JSX.Element
 }
@@ -20,11 +23,6 @@ function PrivateRoute({privateElement}: IPrivateRoute) {
     }
 
     return <Navigate to="/"/>
-}
-
-interface IUser {
-    user: string[],
-    token: string
 }
 
 const App = () => {

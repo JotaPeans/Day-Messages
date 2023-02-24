@@ -11,24 +11,14 @@ interface IPopup {
     setShowPopup: Dispatch<React.SetStateAction<boolean>>
 }
 
-interface IUser {
-    userId: string,
-    userPhoto: string,
-    token: string
-}
-
 interface IUserDB {
     _id: string,
     cpf: string,
     userPhoto: string
 }
 
-interface IUserDTO {
-    user: IUser
-}
-
 const PopupMessage = ({show, setShowPopup} : IPopup) => {
-    const { user, setSuccess }: IUserDTO = useContext(AppContext);
+    const { user, setSuccess } = useContext(AppContext);
     const [userToId, setUserToId] = useState<string>();
     const [users, setUsers] = useState<IUserDB[]>();
     const message = useRef<HTMLTextAreaElement>(null);
@@ -37,15 +27,15 @@ const PopupMessage = ({show, setShowPopup} : IPopup) => {
         e.preventDefault();
         if(message.current) {
             const postMessageRes = await api.post("/message", {
-                userFromId: user.userId,
+                userFromId: user?.userId,
                 userToId: userToId,
                 message: message.current.value
-            }, { headers: {Authorization: `bearer ${user.token}`} });
+            }, { headers: {Authorization: `bearer ${user?.token}`} });
 
             if(postMessageRes.status === 200) {
-                setSuccess(true);
+                setSuccess ? setSuccess(true) : null
                 setInterval(() => {
-                    setSuccess(false);
+                    setSuccess ? setSuccess(false) : null
                 }, 3000);
             }
             else {
@@ -64,12 +54,12 @@ const PopupMessage = ({show, setShowPopup} : IPopup) => {
     async function loadUsers() {
         const usersRes = await api.get("/user", {
             headers: {
-                authorization: `bearer ${user.token}`
+                authorization: `bearer ${user?.token}`
             }
         });
         const usersData: IUserDB[] = await usersRes.data;
         const newUsersData = usersData.filter(value => {
-            if (value._id !== user.userId) {
+            if (value._id !== user?.userId) {
                 return value;
             }
         })

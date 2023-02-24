@@ -15,18 +15,6 @@ import test from "../images/test.png";
 import AppContext from "../context/AppContext";
 import api from "../api/api";
 
-
-interface IUser {
-    userName: string,
-    userId: string,
-    userPhoto: string,
-    token: string
-}
-
-interface IUserDTO {
-    user: IUser
-}
-
 interface IMessage {
     userFromId: string,
     userToId: string,
@@ -35,7 +23,7 @@ interface IMessage {
 }
 
 const Home = () => {
-    const { user }: IUserDTO = useContext(AppContext);
+    const { user } = useContext(AppContext);
     const [cards, setCards] = useState<IMessage[]>([]);
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
@@ -46,9 +34,9 @@ const Home = () => {
     }
 
     async function loadMessages() {
-        const messageRes = await api.get(`/message/${user.userId}`, {
+        const messageRes = await api.get(`/message/${user?.userId}`, {
             headers: {
-                Authorization: `bearer ${user.token}`
+                Authorization: `bearer ${user?.token}`
             }
         });
         const messageData: IMessage[] = await messageRes.data;
@@ -67,9 +55,9 @@ const Home = () => {
             <header className="fixed z-20 top-0 flex items-center justify-between px-5 w-full h-16 bg-[#934389]/80 backdrop-blur-lg shadow-lg">
                 <div className="flex items-center gap-4">
                     <div className="h-10 rounded-xl overflow-clip">
-                        <img className="h-full" src={`data:image/jpeg;base64,${user.userPhoto}`} alt="photo" />
+                        <img className="h-full" src={`data:image/jpeg;base64,${user?.userPhoto}`} alt="photo" />
                     </div>
-                    <h2 className=" text-2xl font-semibold">{user.userName}</h2>
+                    <h2 className=" text-2xl font-semibold">{user?.userName}</h2>
                 </div>
                 <button onClick={logOut} className="p-2 bg-white/20 rounded-lg"><HiOutlineLogout className="text-xl"/></button>
             </header>
