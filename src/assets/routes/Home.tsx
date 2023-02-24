@@ -23,12 +23,13 @@ interface IMessage {
 }
 
 const Home = () => {
-    const { user } = useContext(AppContext);
+    const { user, setUser } = useContext(AppContext);
     const [cards, setCards] = useState<IMessage[]>([]);
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
 
     function logOut() {
+        setUser ? setUser(null) : null;
         localStorage.clear();
         return navigate("/");
     }
