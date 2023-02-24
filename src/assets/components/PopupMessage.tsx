@@ -96,7 +96,7 @@ const PopupMessage = ({show, setShowPopup} : IPopup) => {
                 <form onSubmit={e => submitMessage(e)} className="flex flex-col">
                     <label htmlFor="message">Mensagem:</label>
                     <textarea ref={message} className="border p-1" id="message" cols={30} rows={10}></textarea>
-                    <input disabled={!userToId ? true : false} className={`p-2 bg-violet-500 transition-all rounded-md font-bold text-white mt-2 ${!userToId ? " bg-slate-400/50 cursor-not-allowed" : "hover:bg-violet-600 cursor-pointer"}`} type="submit" value="Submit" />
+                    <input disabled={!userToId ? true : false} className={`p-2 transition-all rounded-md font-bold text-white mt-2 ${!userToId ? " bg-slate-400/50 cursor-not-allowed" : "bg-violet-500 hover:bg-violet-600 cursor-pointer"}`} type="submit" value="Submit" />
                 </form>
             </div>
         </div>

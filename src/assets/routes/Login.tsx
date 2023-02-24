@@ -40,6 +40,12 @@ const Login = () => {
         }
     }
 
+    useEffect(() => {
+        if(user || localStorage.getItem("userData")) {
+            navigate("/home");
+        }
+    }, []);
+
     return (
         <Layout className=" w-screen h-screen flex flex-col justify-center items-center gap-10 text-white">
             <RiShieldUserLine className="text-8xl"/>
