@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useLocalStorage } from "usehooks-ts";
 import { ReactNode } from "react"
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
@@ -13,18 +14,25 @@ interface IPrivateRoute {
 }
 
 function PrivateRoute({privateElement}: IPrivateRoute) {
-    const user = localStorage.getItem("user");
-    if(!user) {
+    const user = localStorage.getItem("userData");
+    if(user) {
         return privateElement
     }
 
     return <Navigate to="/"/>
 }
 
+interface IUser {
+    user: string[],
+    token: string
+}
 
 const App = () => {
+    const [user, setUser] = useLocalStorage<IUser | null>("userData", null);
+    const [success, setSuccess] = useState(false);
+
     return (
-        <AppContext.Provider value={{}}>
+        <AppContext.Provider value={{user, setUser, success, setSuccess}}>
             <BrowserRouter>
                 <Routes>
                     <Route index path="/" element={ <Login/> }/>

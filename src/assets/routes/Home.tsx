@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import Layout from "../components/Layout";
 
@@ -9,16 +9,34 @@ import { IoAddOutline } from "react-icons/io5";
 //components
 import Card from "../components/Card";
 import PopupMessage from "../components/PopupMessage";
+import Success from "../components/Success";
 
 import test from "../images/test.png";
+import AppContext from "../context/AppContext";
+import api from "../api/api";
 
-interface ICards {
+
+interface IUser {
+    userName: string,
+    userId: string,
+    userPhoto: string,
+    token: string
+}
+
+interface IUserDTO {
+    user: IUser
+}
+
+interface IMessage {
+    userFromId: string,
+    userToId: string,
     message: string,
     date: string
-}   
+}
 
 const Home = () => {
-    const [cards, setCards] = useState<ICards[]>([]);
+    const { user }: IUserDTO = useContext(AppContext);
+    const [cards, setCards] = useState<IMessage[]>([]);
     const [showPopup, setShowPopup] = useState(false);
     const navigate = useNavigate();
 
@@ -27,17 +45,21 @@ const Home = () => {
         return navigate("/");
     }
 
+    async function loadMessages() {
+        const messageRes = await api.get(`/message/${user.userId}`, {
+            headers: {
+                Authorization: `bearer ${user.token}`
+            }
+        });
+        const messageData: IMessage[] = await messageRes.data;
+        //console.log(messageData);
+    
+        setCards(messageData);
+        
+    }
+
     useEffect(() => {
-        setCards([
-            {
-                message: "te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo te amo ",
-                date: "01/02/2023"
-            },
-            {
-                message: "te amo 2",
-                date: "01/02/2023"
-            },
-        ])
+        loadMessages();
     }, []);
 
     return (
@@ -45,12 +67,14 @@ const Home = () => {
             <header className="fixed z-20 top-0 flex items-center justify-between px-5 w-full h-16 bg-[#934389]/80 backdrop-blur-lg shadow-lg">
                 <div className="flex items-center gap-4">
                     <div className="h-10 rounded-xl overflow-clip">
-                        <img className="h-full" src={test} alt="photo" />
+                        <img className="h-full" src={`data:image/jpeg;base64,${user.userPhoto}`} alt="photo" />
                     </div>
-                    <h2 className=" text-2xl font-semibold">usuario</h2>
+                    <h2 className=" text-2xl font-semibold">{user.userName}</h2>
                 </div>
                 <button onClick={logOut} className="p-2 bg-white/20 rounded-lg"><HiOutlineLogout className="text-xl"/></button>
             </header>
+
+            <Success/>
 
             <button onClick={e => setShowPopup(!showPopup)} className="fixed z-20 bottom-4 right-4 p-2 bg-slate-100/30 rounded-lg shadow-lg"><IoAddOutline className="text-3xl"/></button>
 

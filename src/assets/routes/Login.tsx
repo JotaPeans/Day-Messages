@@ -1,18 +1,40 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { FormEvent } from "react";
-import axios from "axios";
+import api from "../api/api";
 import Layout from "../components/Layout";
 import { RiShieldUserLine } from "react-icons/ri";
+import AppContext from "../context/AppContext";
+import { useNavigate } from "react-router-dom";
+
+interface IUser {
+    userName: string,
+    userId: string,
+    userPhoto: string,
+    token: string
+}
 
 const Login = () => {
-    const mailRef = useRef<HTMLInputElement>(null);
+    const { user, setUser } = useContext(AppContext);
+    const cpfRef = useRef<HTMLInputElement>(null);
     const passwRef = useRef<HTMLInputElement>(null);
+    const navigate = useNavigate();
 
-    const signin = (e: FormEvent): void => {
+    const signin = async (e: FormEvent) => {
         e.preventDefault();
-        if(mailRef.current && passwRef.current) {
-            console.log(mailRef.current.value);
-            console.log(passwRef.current.value);
+        if(cpfRef.current && passwRef.current) {
+            const cpf = cpfRef.current.value;
+            const password = passwRef.current.value
+
+            const body = {
+                cpf: cpf,
+                password: password
+            }
+            
+            const loginRes = await api.post("/signin", body);
+
+            const loginData: IUser = await loginRes.data;
+            setUser(loginData);
+            return navigate("/home");
         }
     }
 
@@ -21,7 +43,7 @@ const Login = () => {
             <RiShieldUserLine className="text-8xl"/>
 
             <form onSubmit={e => signin(e)} className=" flex flex-col gap-2 ">
-                <input className="px-2 py-1 rounded text-slate-900" placeholder="Username" ref={mailRef} type="text"/>
+                <input className="px-2 py-1 rounded text-slate-900" placeholder="Cpf" ref={cpfRef} type="text"/>
 
                 <input className="px-2 py-1 rounded text-slate-900" placeholder="Password" ref={passwRef} type="password"/>
 
