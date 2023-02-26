@@ -69,11 +69,18 @@ const Home = () => {
 
             <section className="w-full h-full flex flex-col gap-2">
 
-                {cards.map((item, index) => {
-                    return (
-                        <Card key={index} message={item.message} date={item.date}/>
-                    )
-                })}
+                {cards ? (
+                    cards.map((item, index) => {
+                        return (
+                            <Card key={index} message={item.message} date={item.date}/>
+                        )
+                    })
+
+                ) : (
+                    <div className="relative z-10 bg-slate-300/20 w-full min-h-[10rem] h-auto rounded-lg shadow-lg py-2 px-3 animate-pulse">
+
+                    </div>
+                )}
 
             </section>
 
