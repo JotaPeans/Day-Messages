@@ -69,7 +69,7 @@ const Home = () => {
 
             <section className="w-full h-full flex flex-col gap-2">
 
-                {cards ? (
+                {cards.length >= 1 ? (
                     cards.map((item, index) => {
                         return (
                             <Card key={index} message={item.message} date={item.date}/>
