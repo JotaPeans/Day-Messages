@@ -49,7 +49,7 @@ const Login = () => {
 
     return (
         <Layout className=" w-screen h-screen flex flex-col justify-center items-center gap-10 text-white">
-            <RiShieldUserLine className="text-8xl"/>
+            <RiShieldUserLine className="text-[10rem]"/>
 
             <form onSubmit={e => signin(e)} className=" flex flex-col gap-10 ">
                 <Input inputType="cpf" refInput={cpfRef}/>
