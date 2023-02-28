@@ -8,6 +8,7 @@ import api from "../api/api";
 
 //components
 import Layout from "../components/Layout";
+import Input from "../components/Input";
 
 //icons
 import { RiShieldUserLine } from "react-icons/ri";
@@ -50,12 +51,10 @@ const Login = () => {
         <Layout className=" w-screen h-screen flex flex-col justify-center items-center gap-10 text-white">
             <RiShieldUserLine className="text-8xl"/>
 
-            <form onSubmit={e => signin(e)} className=" flex flex-col gap-2 ">
-                <input className="px-2 py-1 rounded text-slate-900" placeholder="Cpf" ref={cpfRef} type="text"/>
-
-                <input className="px-2 py-1 rounded text-slate-900" placeholder="Password" ref={passwRef} type="password"/>
-
-                <input type="submit" value="Sign in" className="border-2 transition-all rounded cursor-pointer hover:bg-slate-100 hover:text-slate-900"/>
+            <form onSubmit={e => signin(e)} className=" flex flex-col gap-10 ">
+                <Input inputType="cpf" refInput={cpfRef}/>
+                <Input inputType="password" refInput={passwRef}/>
+                <Input inputType="submit"/>
             </form>
         </Layout>
     );
