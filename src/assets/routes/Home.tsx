@@ -43,7 +43,7 @@ const Home = () => {
         const messageData: IMessage[] = await messageRes.data;
         //console.log(messageData);
     
-        setCards(messageData);
+        setCards(messageData.reverse());
         
     }
 
