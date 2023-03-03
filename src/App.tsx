@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useLocalStorage } from "usehooks-ts";
 import { ReactNode } from "react"
-import { HashRouter, Routes, Route, Navigate } from "react-router-dom";
+import { HashRouter, Routes, Route, Navigate, BrowserRouter } from "react-router-dom";
 
 import AppContext from "./assets/context/AppContext";
 
@@ -31,12 +31,12 @@ const App = () => {
 
     return (
         <AppContext.Provider value={{user, setUser, success, setSuccess}}>
-            <HashRouter>
+            <BrowserRouter>
                 <Routes>
                     <Route index path="/" element={ <Login/> }/>
                     <Route path="/home" element={ <PrivateRoute privateElement={ <Home/> }/> }/>
                 </Routes>
-            </HashRouter>
+            </BrowserRouter>
         </AppContext.Provider>
     );
 }
