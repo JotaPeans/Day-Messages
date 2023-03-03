@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 
 interface IInput {
     inputType: "email" | "password" | "cpf" | "text" | "submit",
-    refInput: React.RefObject<HTMLInputElement>,
+    refInput?: React.RefObject<HTMLInputElement>,
 }
 
 const Input = ({inputType = "text", refInput }: IInput) => {
@@ -48,13 +48,13 @@ const Input = ({inputType = "text", refInput }: IInput) => {
         if(inputType === "cpf") {
             maskCpf(key);
 
-            if(refInput.current && ref.current) {
+            if(refInput?.current && ref.current) {
                 refInput.current.value = ref.current.value.replace(/\D/g, "");
             }
             return
         }
 
-        if(refInput.current && ref.current) {
+        if(refInput?.current && ref.current) {
             refInput.current.value = ref.current.value;
         }
     }
