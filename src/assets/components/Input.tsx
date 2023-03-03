@@ -27,9 +27,6 @@ const Input = ({inputType = "text", refInput }: IInput) => {
         
         const input = ref.current;
 
-        //console.log(key);
-        
-
         const numberKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
         if(key in numberKeys) {
@@ -41,14 +38,18 @@ const Input = ({inputType = "text", refInput }: IInput) => {
             }
         }
         else {
-            //TODO apagar ultimo digito
+            if(input) {
+                let array = input.value.split("");
+                array.pop();
+                const string = array.join("");
+
+                input.value = string;
+            }
         }
 
     }
 
-    function handleChange(e: React.KeyboardEvent<HTMLInputElement>) {
-        const key = e.key;
-        
+    function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
         if(inputType === "cpf") {
             maskCpf(key);
 
@@ -67,7 +68,7 @@ const Input = ({inputType = "text", refInput }: IInput) => {
         <div className="flex flex-col justify-center relative">
             <label className={`absolute transition-all ${labelState ? " -translate-y-11" : null} left-4 text-xl ${inputType === "submit" ? "hidden" : null} ${inputType === "cpf" ? "uppercase" : "capitalize"}`} htmlFor={inputType}>{inputType}</label>
             <input className="hidden" ref={refInput} type="text" />
-            <input maxLength={inputType === "cpf" ? 14 : undefined} type={inputType} value={inputType === "submit" ? inputType : undefined} onKeyDown={e => handleChange(e)} onBlur={handleBlur} onFocus={handleFocus} ref={ref} className={` h-12 bg-slate-900/40 rounded-xl px-4 text-xl ${inputType === "submit" ? "cursor-pointer hover:bg-slate-900/60 transition-all" : null}`} id={inputType} />
+            <input maxLength={inputType === "cpf" ? 14 : undefined} type={inputType} value={inputType === "submit" ? inputType : undefined} onChange={e => handleChange(e)} onKeyDown={e => setKey(e.key)} onBlur={handleBlur} onFocus={handleFocus} ref={ref} className={` h-12 bg-slate-900/40 rounded-xl px-4 text-xl ${inputType === "submit" ? "cursor-pointer hover:bg-slate-900/60 transition-all" : null}`} id={inputType} />
         </div>
     );
 }
