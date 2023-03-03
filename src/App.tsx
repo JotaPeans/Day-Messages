@@ -31,12 +31,12 @@ const App = () => {
 
     return (
         <AppContext.Provider value={{user, setUser, success, setSuccess}}>
-            <BrowserRouter>
+            <HashRouter>
                 <Routes>
                     <Route index path="/" element={ <Login/> }/>
                     <Route path="/home" element={ <PrivateRoute privateElement={ <Home/> }/> }/>
                 </Routes>
-            </BrowserRouter>
+            </HashRouter>
         </AppContext.Provider>
     );
 }
