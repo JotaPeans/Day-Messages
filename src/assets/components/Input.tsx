@@ -11,12 +11,16 @@ const Input = ({inputType = "text", refInput }: IInput) => {
     const [key, setKey] = useState("");
 
     function handleFocus() {
-        ref.current?.value;
-        setlabelState(true);
+        if(inputType !== "submit") {
+            ref.current?.value;
+            setlabelState(true);
+        }
     }
 
     function handleBlur() {
-        !ref.current?.value ? setlabelState(false) : setlabelState(true);
+        if(inputType !== "submit") {
+            !ref.current?.value ? setlabelState(false) : setlabelState(true);
+        }
     }
 
     function maskCpf(key: string) {
@@ -61,9 +65,9 @@ const Input = ({inputType = "text", refInput }: IInput) => {
 
     return (
         <div className="flex flex-col justify-center relative">
-            <label className={`absolute transition-all ${labelState ? " -translate-y-11" : null} left-4 text-xl ${inputType === "cpf" ? "uppercase" : "capitalize"}`} htmlFor={inputType}>{inputType}</label>
+            <label className={`absolute transition-all ${labelState ? " -translate-y-11" : null} left-4 text-xl ${inputType === "submit" ? "hidden" : null} ${inputType === "cpf" ? "uppercase" : "capitalize"}`} htmlFor={inputType}>{inputType}</label>
             <input className="hidden" ref={refInput} type="text" />
-            <input maxLength={inputType === "cpf" ? 14 : undefined} type={inputType} onKeyDown={e => handleChange(e)} onBlur={handleBlur} onFocus={handleFocus} ref={ref} className=" h-12 bg-slate-900/40 rounded-xl px-4 text-xl" id={inputType} />
+            <input maxLength={inputType === "cpf" ? 14 : undefined} type={inputType} value={inputType === "submit" ? inputType : undefined} onKeyDown={e => handleChange(e)} onBlur={handleBlur} onFocus={handleFocus} ref={ref} className={` h-12 bg-slate-900/40 rounded-xl px-4 text-xl ${inputType === "submit" ? "cursor-pointer hover:bg-slate-900/60 transition-all" : null}`} id={inputType} />
         </div>
     );
 }
