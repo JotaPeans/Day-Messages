@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 
 interface IInput {
-    inputType: "email" | "password" | "cpf" | "text",
+    inputType: "email" | "password" | "cpf" | "text" | "submit",
     refInput: React.RefObject<HTMLInputElement>,
 }
 
