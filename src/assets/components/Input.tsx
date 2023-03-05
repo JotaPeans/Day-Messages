@@ -27,7 +27,7 @@ const Input = ({inputType = "text", refInput }: IInput) => {
         
         const input = ref.current;
 
-        const numberKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
+        const numberKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace"];
 
         if(key in numberKeys) {
             if(( input?.value.length === 3 || input?.value.length === 7 ) && key !== "Backspace") {
