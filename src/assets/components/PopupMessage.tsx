@@ -36,8 +36,10 @@ const PopupMessage = ({show, setShowPopup} : IPopup) => {
                 setSuccess ? setSuccess(true) : null
                 setInterval(() => {
                     setSuccess ? setSuccess(false) : null;
-                    message.current.value = "";
-                    seShowPopup(false);
+                    if(message.current) {
+                        message.current.value = "";
+                        setShowPopup(false);
+                    }   
                 }, 3000);
             }
             else {
