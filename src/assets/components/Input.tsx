@@ -37,14 +37,12 @@ const Input = ({inputType = "text", refInput }: IInput) => {
                 input.value = input.value + "-";
             }
         }
-        else {
-            if(input) {
-                let array = input.value.split("");
-                array.pop();
-                const string = array.join("");
+        else if(input && key !== "Backspace") {
+            let array = input.value.split("");
+            array.pop();
+            const string = array.join("");
 
-                input.value = string;
-            }
+            input.value = string;
         }
 
     }
