@@ -65,7 +65,7 @@ const Home = () => {
 
             <Success/>
 
-            <button onClick={e => setShowPopup(!showPopup)} className="fixed z-20 bottom-4 right-4 p-2 bg-[#934389]/80 rounded-lg shadow-lg"><IoAddOutline className="text-3xl"/></button>
+            <button onClick={e => setShowPopup(!showPopup)} className="fixed z-20 bottom-4 right-4 p-2 bg-[#934389]/80 backdrop-blur-md rounded-lg shadow-lg"><IoAddOutline className="text-3xl"/></button>
 
             <section className="w-full h-full flex flex-col gap-2">
 
