@@ -27,14 +27,32 @@ const Input = ({inputType = "text", refInput }: IInput) => {
         
         const input = ref.current;
 
-        const numberKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "Backspace"];
+        const numberKeys = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
 
         if(key in numberKeys) {
-            if(( input?.value.length === 3 || input?.value.length === 7 ) && key !== "Backspace") {
+            if(input?.value.length === 3 || input?.value.length === 7) {
                 input.value = input.value + ".";
             }
-            else if(input?.value.length === 11 && key !== "Backspace") {
+            else if(input?.value.length === 11) {
                 input.value = input.value + "-";
+            }
+            else if (input?.value.length === 4) {
+                let array = input.value.split("");
+                array[3] = ".";
+                let string = array.join("");
+                input.value = string + key;
+            }
+            else if (input?.value.length === 8) {
+                let array = input.value.split("");
+                array[7] = ".";
+                let string = array.join("");
+                input.value = string + key;
+            }
+            else if (input?.value.length === 12) {
+                let array = input.value.split("");
+                array[11] = "-";
+                let string = array.join("");
+                input.value = string + key;
             }
         }
         else if(input && key !== "Backspace") {
