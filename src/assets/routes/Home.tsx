@@ -20,7 +20,8 @@ interface IMessage {
     userFromId: string,
     userToId: string,
     message: string,
-    date: string
+    date: string,
+    isNew: boolean
 }
 
 const Home = () => {
@@ -42,10 +43,20 @@ const Home = () => {
                     Authorization: `bearer ${user?.token}`
                 }
             });
-            const messageData: IMessage[] = await messageRes.data;
-            //console.log(messageData);
-        
+            let messageData: IMessage[] = await messageRes.data;
+
+            let dateNow = new Date().toLocaleDateString();
+
+            for(let date of messageData) {
+                let newDate = new Date(date.date);
+                date.date = newDate.toLocaleDateString();
+                if(dateNow === date.date) {
+                    date.isNew = true;
+                }
+            }
+
             setCards(messageData.reverse());
+
         } catch (err) {
             console.log(err)
             if(err instanceof AxiosError) {                
@@ -83,7 +94,7 @@ const Home = () => {
                 {cards.length >= 1 ? (
                     cards.map((item, index) => {
                         return (
-                            <Card key={index} message={item.message} date={item.date}/>
+                            <Card isNew={item.isNew} key={index} message={item.message} date={item.date}/>
                         )
                     })
 
