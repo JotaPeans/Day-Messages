@@ -42,7 +42,7 @@ const Login = () => {
     }
 
     useEffect(() => {
-        if(user || localStorage.getItem("userData")) {
+        if(user) {
             navigate("/home");
         }
     }, []);

@@ -14,6 +14,7 @@ import Success from "../components/Success";
 import test from "../images/test.png";
 import AppContext from "../context/AppContext";
 import api from "../api/api";
+import { AxiosError } from "axios";
 
 interface IMessage {
     userFromId: string,
@@ -35,16 +36,26 @@ const Home = () => {
     }
 
     async function loadMessages() {
-        const messageRes = await api.get(`/message/${user?.userId}`, {
-            headers: {
-                Authorization: `bearer ${user?.token}`
-            }
-        });
-        const messageData: IMessage[] = await messageRes.data;
-        //console.log(messageData);
-    
-        setCards(messageData.reverse());
+        try {
+            const messageRes = await api.get(`/message/${user?.userId}`, {
+                headers: {
+                    Authorization: `bearer ${user?.token}`
+                }
+            });
+            const messageData: IMessage[] = await messageRes.data;
+            //console.log(messageData);
         
+            setCards(messageData.reverse());
+        } catch (err) {
+            console.log(err)
+            if(err instanceof AxiosError) {                
+                if(err.response?.data) {
+                    setUser ? setUser(null) : null;
+                    console.log(err.response?.data.message);
+                    navigate("/");
+                }
+            }
+        }
     }
 
     useEffect(() => {
